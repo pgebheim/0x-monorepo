@@ -27,7 +27,11 @@ export class ExchangeSwapQuoteConsumer implements SwapQuoteConsumerBase<Exchange
 
     private readonly _contractWrappers: ContractWrappers;
 
-    constructor(supportedProvider: SupportedProvider, contractWrappers: ContractWrappers, options: Partial<SwapQuoteConsumerOpts> = {}) {
+    constructor(
+        supportedProvider: SupportedProvider,
+        contractWrappers: ContractWrappers,
+        options: Partial<SwapQuoteConsumerOpts> = {},
+    ) {
         const { networkId } = _.merge({}, constants.DEFAULT_SWAP_QUOTER_OPTS, options);
         assert.isNumber('networkId', networkId);
         const provider = providerUtils.standardizeOrThrow(supportedProvider);
