@@ -214,7 +214,28 @@ class AcceptsAnArrayOfBytesMethod(ContractMethod):
         """
         (a) = self.validate_and_normalize_inputs(a)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(a).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(a).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "bytes[]", "name": "a", "type": "bytes[]"}
+            ],
+            "name": "acceptsAnArrayOfBytes",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "accepts_an_array_of_bytes",
+            "functionSignature": "acceptsAnArrayOfBytes(bytes[])",
+            "devdoc": {
+                "details": "a method that accepts an array of bytes",
+                "params": {"a": "the array of bytes being accepted"},
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, a: List[Union[bytes, str]], tx_params: Optional[TxParams] = None
@@ -271,7 +292,24 @@ class AcceptsBytesMethod(ContractMethod):
         """
         (a) = self.validate_and_normalize_inputs(a)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(a).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(a).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "bytes", "name": "a", "type": "bytes"}
+            ],
+            "name": "acceptsBytes",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "accepts_bytes",
+            "functionSignature": "acceptsBytes(bytes)",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, a: Union[bytes, str], tx_params: Optional[TxParams] = None
@@ -331,7 +369,95 @@ class ComplexInputComplexOutputMethod(ContractMethod):
         """
         (complex_input) = self.validate_and_normalize_inputs(complex_input)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(complex_input).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(complex_input).call(
+            tx_params.as_dict()
+        )
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint256",
+                            "name": "foo",
+                            "type": "uint256",
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "bar",
+                            "type": "bytes",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "car",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.ComplexInput",
+                    "name": "complexInput",
+                    "type": "tuple",
+                }
+            ],
+            "name": "complexInputComplexOutput",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint256",
+                                    "name": "foo",
+                                    "type": "uint256",
+                                },
+                                {
+                                    "internalType": "bytes",
+                                    "name": "bar",
+                                    "type": "bytes",
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "car",
+                                    "type": "string",
+                                },
+                            ],
+                            "internalType": "struct AbiGenDummy.ComplexInput",
+                            "name": "input",
+                            "type": "tuple",
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "lorem",
+                            "type": "bytes",
+                        },
+                        {
+                            "internalType": "bytes",
+                            "name": "ipsum",
+                            "type": "bytes",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "dolor",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.ComplexOutput",
+                    "name": "",
+                    "type": "tuple",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "complex_input_complex_output",
+            "functionSignature": "complexInputComplexOutput((uint256,bytes,string))",
+            "devdoc": {
+                "details": "Tests decoding when the input and output are complex."
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self,
@@ -428,7 +554,45 @@ class EcrecoverFnMethod(ContractMethod):
         """
         (_hash, v, r, s) = self.validate_and_normalize_inputs(_hash, v, r, s)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(_hash, v, r, s).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(_hash, v, r, s).call(
+            tx_params.as_dict()
+        )
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "bytes32", "name": "hash", "type": "bytes32"},
+                {"internalType": "uint8", "name": "v", "type": "uint8"},
+                {"internalType": "bytes32", "name": "r", "type": "bytes32"},
+                {"internalType": "bytes32", "name": "s", "type": "bytes32"},
+            ],
+            "name": "ecrecoverFn",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "signerAddress",
+                    "type": "address",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "ecrecover_fn",
+            "functionSignature": "ecrecoverFn(bytes32,uint8,bytes32,bytes32)",
+            "devdoc": {
+                "details": "test that devdocs will be generated and     that multiline devdocs will look okay",
+                "params": {
+                    "hash": "description of some hash. Let's make this line super long to demonstrate hanging indents for method params. It has to be more than one hundred twenty columns.",
+                    "r": "ECDSA r output",
+                    "s": "ECDSA s output",
+                    "v": "some v, recovery id",
+                },
+                "return": "the signerAddress that created this signature.  this line too is super long in order to demonstrate the proper hanging indentation in generated code.",
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self,
@@ -499,7 +663,22 @@ class EmitSimpleEventMethod(ContractMethod):
         :returns: the return value of the underlying method.
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "emitSimpleEvent",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "emit_simple_event",
+            "functionSignature": "emitSimpleEvent()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -540,7 +719,50 @@ class MethodReturningArrayOfStructsMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "methodReturningArrayOfStructs",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes",
+                            "name": "someBytes",
+                            "type": "bytes",
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "anInteger",
+                            "type": "uint32",
+                        },
+                        {
+                            "internalType": "bytes[]",
+                            "name": "aDynamicArrayOfBytes",
+                            "type": "bytes[]",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "aString",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.Struct[]",
+                    "name": "",
+                    "type": "tuple[]",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "method_returning_array_of_structs",
+            "functionSignature": "methodReturningArrayOfStructs()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -580,7 +802,25 @@ class MethodReturningMultipleValuesMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "methodReturningMultipleValues",
+            "outputs": [
+                {"internalType": "uint256", "name": "", "type": "uint256"},
+                {"internalType": "string", "name": "", "type": "string"},
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": true,
+            "languageSpecificName": "method_returning_multiple_values",
+            "functionSignature": "methodReturningMultipleValues()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -622,7 +862,42 @@ class MethodUsingNestedStructWithInnerStructNotUsedElsewhereMethod(
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "methodUsingNestedStructWithInnerStructNotUsedElsewhere",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint256",
+                                    "name": "aField",
+                                    "type": "uint256",
+                                }
+                            ],
+                            "internalType": "struct AbiGenDummy.StructNotDirectlyUsedAnywhere",
+                            "name": "innerStruct",
+                            "type": "tuple",
+                        }
+                    ],
+                    "internalType": "struct AbiGenDummy.NestedStructWithInnerStructNotUsedElsewhere",
+                    "name": "",
+                    "type": "tuple",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "method_using_nested_struct_with_inner_struct_not_used_elsewhere",
+            "functionSignature": "methodUsingNestedStructWithInnerStructNotUsedElsewhere()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -697,9 +972,43 @@ class MultiInputMultiOutputMethod(ContractMethod):
             index_0, index_1, index_2
         )
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(index_0, index_1, index_2).call(
-            tx_params.as_dict()
-        )
+        returned_tuple = self.underlying_method(
+            index_0, index_1, index_2
+        ).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "index_0",
+                    "type": "uint256",
+                },
+                {"internalType": "bytes", "name": "index_1", "type": "bytes"},
+                {
+                    "internalType": "string",
+                    "name": "index_2",
+                    "type": "string",
+                },
+            ],
+            "name": "multiInputMultiOutput",
+            "outputs": [
+                {"internalType": "bytes", "name": "", "type": "bytes"},
+                {"internalType": "bytes", "name": "", "type": "bytes"},
+                {"internalType": "string", "name": "", "type": "string"},
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": true,
+            "languageSpecificName": "multi_input_multi_output",
+            "functionSignature": "multiInputMultiOutput(uint256,bytes,string)",
+            "devdoc": {
+                "details": "Tests decoding when the input and output are complex and have more than one argument."
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self,
@@ -774,7 +1083,62 @@ class NestedStructInputMethod(ContractMethod):
         """
         (n) = self.validate_and_normalize_inputs(n)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(n).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(n).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bytes",
+                                    "name": "someBytes",
+                                    "type": "bytes",
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "anInteger",
+                                    "type": "uint32",
+                                },
+                                {
+                                    "internalType": "bytes[]",
+                                    "name": "aDynamicArrayOfBytes",
+                                    "type": "bytes[]",
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "aString",
+                                    "type": "string",
+                                },
+                            ],
+                            "internalType": "struct AbiGenDummy.Struct",
+                            "name": "innerStruct",
+                            "type": "tuple",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "description",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.NestedStruct",
+                    "name": "n",
+                    "type": "tuple",
+                }
+            ],
+            "name": "nestedStructInput",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "nested_struct_input",
+            "functionSignature": "nestedStructInput(((bytes,uint32,bytes[],string),string))",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, n: Tuple0xc9bdd2d5, tx_params: Optional[TxParams] = None
@@ -818,7 +1182,62 @@ class NestedStructOutputMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "nestedStructOutput",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "bytes",
+                                    "name": "someBytes",
+                                    "type": "bytes",
+                                },
+                                {
+                                    "internalType": "uint32",
+                                    "name": "anInteger",
+                                    "type": "uint32",
+                                },
+                                {
+                                    "internalType": "bytes[]",
+                                    "name": "aDynamicArrayOfBytes",
+                                    "type": "bytes[]",
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "aString",
+                                    "type": "string",
+                                },
+                            ],
+                            "internalType": "struct AbiGenDummy.Struct",
+                            "name": "innerStruct",
+                            "type": "tuple",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "description",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.NestedStruct",
+                    "name": "",
+                    "type": "tuple",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "nested_struct_output",
+            "functionSignature": "nestedStructOutput()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -860,7 +1279,25 @@ class NoInputNoOutputMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "noInputNoOutput",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "no_input_no_output",
+            "functionSignature": "noInputNoOutput()",
+            "devdoc": {
+                "details": "Tests decoding when both input and output are empty."
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -904,7 +1341,27 @@ class NoInputSimpleOutputMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "noInputSimpleOutput",
+            "outputs": [
+                {"internalType": "uint256", "name": "", "type": "uint256"}
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "no_input_simple_output",
+            "functionSignature": "noInputSimpleOutput()",
+            "devdoc": {
+                "details": "Tests decoding when input is empty and output is non-empty."
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -948,7 +1405,24 @@ class NonPureMethodMethod(ContractMethod):
         :returns: the return value of the underlying method.
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "nonPureMethod",
+            "outputs": [
+                {"internalType": "uint256", "name": "", "type": "uint256"}
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "non_pure_method",
+            "functionSignature": "nonPureMethod()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -989,7 +1463,22 @@ class NonPureMethodThatReturnsNothingMethod(ContractMethod):
         :returns: the return value of the underlying method.
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "nonPureMethodThatReturnsNothing",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "non_pure_method_that_returns_nothing",
+            "functionSignature": "nonPureMethodThatReturnsNothing()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1038,7 +1527,24 @@ class OverloadedMethod2Method(ContractMethod):
         """
         (a) = self.validate_and_normalize_inputs(a)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(a).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(a).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "string", "name": "a", "type": "string"}
+            ],
+            "name": "overloadedMethod",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "overloaded_method2",
+            "functionSignature": "overloadedMethod(string)",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, a: str, tx_params: Optional[TxParams] = None
@@ -1092,7 +1598,24 @@ class OverloadedMethod1Method(ContractMethod):
         """
         (a) = self.validate_and_normalize_inputs(a)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(a).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(a).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "int256", "name": "a", "type": "int256"}
+            ],
+            "name": "overloadedMethod",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "overloaded_method1",
+            "functionSignature": "overloadedMethod(int256)",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, a: int, tx_params: Optional[TxParams] = None
@@ -1136,7 +1659,28 @@ class PureFunctionWithConstantMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "pureFunctionWithConstant",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "someConstant",
+                    "type": "uint256",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "pure_function_with_constant",
+            "functionSignature": "pureFunctionWithConstant()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1176,7 +1720,22 @@ class RequireWithConstantMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "requireWithConstant",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "require_with_constant",
+            "functionSignature": "requireWithConstant()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1216,7 +1775,22 @@ class RevertWithConstantMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "revertWithConstant",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "revert_with_constant",
+            "functionSignature": "revertWithConstant()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1270,7 +1844,33 @@ class SimpleInputNoOutputMethod(ContractMethod):
         """
         (index_0) = self.validate_and_normalize_inputs(index_0)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(index_0).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(index_0).call(
+            tx_params.as_dict()
+        )
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "index_0",
+                    "type": "uint256",
+                }
+            ],
+            "name": "simpleInputNoOutput",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "simple_input_no_output",
+            "functionSignature": "simpleInputNoOutput(uint256)",
+            "devdoc": {
+                "details": "Tests decoding when input is not empty but output is empty."
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, index_0: int, tx_params: Optional[TxParams] = None
@@ -1330,7 +1930,35 @@ class SimpleInputSimpleOutputMethod(ContractMethod):
         """
         (index_0) = self.validate_and_normalize_inputs(index_0)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(index_0).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(index_0).call(
+            tx_params.as_dict()
+        )
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "index_0",
+                    "type": "uint256",
+                }
+            ],
+            "name": "simpleInputSimpleOutput",
+            "outputs": [
+                {"internalType": "uint256", "name": "", "type": "uint256"}
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "simple_input_simple_output",
+            "functionSignature": "simpleInputSimpleOutput(uint256)",
+            "devdoc": {
+                "details": "Tests decoding when both input and output are non-empty."
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, index_0: int, tx_params: Optional[TxParams] = None
@@ -1376,7 +2004,28 @@ class SimplePureFunctionMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "simplePureFunction",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "result",
+                    "type": "uint256",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "simple_pure_function",
+            "functionSignature": "simplePureFunction()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1428,7 +2077,26 @@ class SimplePureFunctionWithInputMethod(ContractMethod):
         """
         (x) = self.validate_and_normalize_inputs(x)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(x).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(x).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "uint256", "name": "x", "type": "uint256"}
+            ],
+            "name": "simplePureFunctionWithInput",
+            "outputs": [
+                {"internalType": "uint256", "name": "sum", "type": "uint256"}
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "simple_pure_function_with_input",
+            "functionSignature": "simplePureFunctionWithInput(uint256)",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, x: int, tx_params: Optional[TxParams] = None
@@ -1472,7 +2140,22 @@ class SimpleRequireMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "simpleRequire",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "simple_require",
+            "functionSignature": "simpleRequire()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1512,7 +2195,22 @@ class SimpleRevertMethod(ContractMethod):
 
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "simpleRevert",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "simple_revert",
+            "functionSignature": "simpleRevert()",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1562,7 +2260,50 @@ class StructInputMethod(ContractMethod):
         """
         (s) = self.validate_and_normalize_inputs(s)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(s).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(s).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes",
+                            "name": "someBytes",
+                            "type": "bytes",
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "anInteger",
+                            "type": "uint32",
+                        },
+                        {
+                            "internalType": "bytes[]",
+                            "name": "aDynamicArrayOfBytes",
+                            "type": "bytes[]",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "aString",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.Struct",
+                    "name": "s",
+                    "type": "tuple",
+                }
+            ],
+            "name": "structInput",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "struct_input",
+            "functionSignature": "structInput((bytes,uint32,bytes[],string))",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, s: Tuple0xcf8ad995, tx_params: Optional[TxParams] = None
@@ -1608,7 +2349,54 @@ class StructOutputMethod(ContractMethod):
         :returns: a Struct struct
         """
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method().call(tx_params.as_dict())
+        returned_tuple = self.underlying_method().call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "structOutput",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "bytes",
+                            "name": "someBytes",
+                            "type": "bytes",
+                        },
+                        {
+                            "internalType": "uint32",
+                            "name": "anInteger",
+                            "type": "uint32",
+                        },
+                        {
+                            "internalType": "bytes[]",
+                            "name": "aDynamicArrayOfBytes",
+                            "type": "bytes[]",
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "aString",
+                            "type": "string",
+                        },
+                    ],
+                    "internalType": "struct AbiGenDummy.Struct",
+                    "name": "s",
+                    "type": "tuple",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "struct_output",
+            "functionSignature": "structOutput()",
+            "devdoc": {
+                "details": "a method that returns a struct",
+                "return": "a Struct struct",
+            },
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, tx_params: Optional[TxParams] = None
@@ -1698,7 +2486,32 @@ class WithAddressInputMethod(ContractMethod):
         """
         (x, a, b, y, c) = self.validate_and_normalize_inputs(x, a, b, y, c)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(x, a, b, y, c).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(x, a, b, y, c).call(
+            tx_params.as_dict()
+        )
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "address", "name": "x", "type": "address"},
+                {"internalType": "uint256", "name": "a", "type": "uint256"},
+                {"internalType": "uint256", "name": "b", "type": "uint256"},
+                {"internalType": "address", "name": "y", "type": "address"},
+                {"internalType": "uint256", "name": "c", "type": "uint256"},
+            ],
+            "name": "withAddressInput",
+            "outputs": [
+                {"internalType": "address", "name": "z", "type": "address"}
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "with_address_input",
+            "functionSignature": "withAddressInput(address,uint256,uint256,address,uint256)",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self,
@@ -1770,7 +2583,24 @@ class WithdrawMethod(ContractMethod):
         """
         (wad) = self.validate_and_normalize_inputs(wad)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(wad).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(wad).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": false,
+            "inputs": [
+                {"internalType": "uint256", "name": "wad", "type": "uint256"}
+            ],
+            "name": "withdraw",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function",
+            "singleReturnValue": false,
+            "hasReturnValue": false,
+            "languageSpecificName": "withdraw",
+            "functionSignature": "withdraw(uint256)",
+            "contractName": "AbiGenDummy",
+        }
 
     def send_transaction(
         self, wad: int, tx_params: Optional[TxParams] = None

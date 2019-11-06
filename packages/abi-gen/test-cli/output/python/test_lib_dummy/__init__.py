@@ -79,7 +79,30 @@ class PublicAddConstantMethod(ContractMethod):
         """
         (x) = self.validate_and_normalize_inputs(x)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(x).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(x).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "uint256", "name": "x", "type": "uint256"}
+            ],
+            "name": "publicAddConstant",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "result",
+                    "type": "uint256",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "public_add_constant",
+            "functionSignature": "publicAddConstant(uint256)",
+            "contractName": "TestLibDummy",
+        }
 
     def send_transaction(
         self, x: int, tx_params: Optional[TxParams] = None
@@ -133,7 +156,30 @@ class PublicAddOneMethod(ContractMethod):
         """
         (x) = self.validate_and_normalize_inputs(x)
         tx_params = super().normalize_tx_params(tx_params)
-        return self.underlying_method(x).call(tx_params.as_dict())
+        returned_tuple = self.underlying_method(x).call(tx_params.as_dict())
+        return returned_tuple
+        {
+            "constant": true,
+            "inputs": [
+                {"internalType": "uint256", "name": "x", "type": "uint256"}
+            ],
+            "name": "publicAddOne",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "result",
+                    "type": "uint256",
+                }
+            ],
+            "payable": false,
+            "stateMutability": "pure",
+            "type": "function",
+            "singleReturnValue": true,
+            "hasReturnValue": true,
+            "languageSpecificName": "public_add_one",
+            "functionSignature": "publicAddOne(uint256)",
+            "contractName": "TestLibDummy",
+        }
 
     def send_transaction(
         self, x: int, tx_params: Optional[TxParams] = None

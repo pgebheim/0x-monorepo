@@ -22,6 +22,7 @@ import * as mkdirp from 'mkdirp';
 import toposort = require('toposort');
 import * as yargs from 'yargs';
 
+import { pythonHandlebarsHelpers } from './python_handlebars_helpers';
 import { ContextData, ContractsBackend, ParamKind } from './types';
 import { utils } from './utils';
 
@@ -153,6 +154,7 @@ function registerTypeScriptHelpers(): void {
 }
 
 function registerPythonHelpers(): void {
+    Handlebars.registerHelper('jsonStringify', o => new Handlebars.SafeString(JSON.stringify(o)));
     Handlebars.registerHelper('equal', (lhs: any, rhs: any) => {
         return lhs === rhs;
     });
@@ -299,6 +301,7 @@ function registerPythonHelpers(): void {
         'toPythonClassname',
         (sourceName: string) => new Handlebars.SafeString(changeCase.pascal(sourceName)),
     );
+    Handlebars.registerHelper('tupleAssignment', pythonHandlebarsHelpers.tupleAssignment);
 }
 if (args.language === 'TypeScript') {
     registerTypeScriptHelpers();
