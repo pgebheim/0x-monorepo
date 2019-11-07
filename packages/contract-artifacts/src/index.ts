@@ -21,7 +21,6 @@ import * as DummyERC20Token from '../artifacts/DummyERC20Token.json';
 import * as DummyERC721Token from '../artifacts/DummyERC721Token.json';
 import * as ERC1155Mintable from '../artifacts/ERC1155Mintable.json';
 import * as StakingProxy from '../artifacts/StakingProxy.json';
-import * as TestStaking from '../artifacts/TestStaking.json';
 import * as ZrxVault from '../artifacts/ZrxVault.json';
 
 // Proxies (Migrations)
@@ -65,6 +64,5 @@ export {
     CoordinatorRegistry,
     Staking,
     StakingProxy,
-    TestStaking,
     ZrxVault,
 };

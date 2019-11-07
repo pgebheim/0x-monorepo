@@ -277,7 +277,7 @@ export async function runMigrationsAsync(
 
     // Note we use TestStakingContract as the deployed bytecode of a StakingContract
     // has the tokens hardcoded
-    const stakingLogic = await wrappers.TestStakingContract.deployFrom0xArtifactAsync(
+    const stakingLogic = await wrappers.StakingContract.deployFrom0xArtifactAsync(
         artifacts.Staking,
         provider,
         txDefaults,
