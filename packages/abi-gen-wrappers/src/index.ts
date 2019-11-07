@@ -155,6 +155,29 @@ export {
     CoordinatorRegistryCoordinatorEndpointSetEventArgs,
     CoordinatorRegistryContract,
 } from './generated-wrappers/coordinator_registry';
-export { EthBalanceCheckerContract } from './generated-wrappers/eth_balance_checker';
+export {
+    ZrxVaultAuthorizedAddressAddedEventArgs,
+    ZrxVaultAuthorizedAddressRemovedEventArgs,
+    ZrxVaultContract,
+    ZrxVaultDepositEventArgs,
+    ZrxVaultEventArgs,
+    ZrxVaultEvents,
+    ZrxVaultInCatastrophicFailureModeEventArgs,
+    ZrxVaultOwnershipTransferredEventArgs,
+    ZrxVaultStakingProxySetEventArgs,
+    ZrxVaultWithdrawEventArgs,
+    ZrxVaultZrxProxySetEventArgs,
+} from './generated-wrappers/zrx_vault';
+
+export {
+    ERC20BridgeProxyAuthorizedAddressAddedEventArgs,
+    ERC20BridgeProxyAuthorizedAddressRemovedEventArgs,
+    ERC20BridgeProxyContract,
+    ERC20BridgeProxyEventArgs,
+    ERC20BridgeProxyEvents,
+} from './generated-wrappers/erc20_bridge_proxy';
+
+// Note: No need to export other events as this is a StakingContract with more open constructor args
+export { TestStakingContract } from './generated-wrappers/test_staking';
 
 export * from '@0x/contract-addresses';

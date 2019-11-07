@@ -5,7 +5,6 @@ import { Web3ProviderEngine } from '@0x/subproviders';
 import { AbiEncoder, BigNumber, providerUtils } from '@0x/utils';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import { MethodAbi, SupportedProvider, TxData } from 'ethereum-types';
-import * as _ from 'lodash';
 
 import { constants } from './utils/constants';
 import { erc20TokenInfo, erc721TokenInfo } from './utils/token_info';
@@ -69,11 +68,15 @@ export async function runMigrationsAsync(
     );
 
     // ZRX
-    const zrxToken = await wrappers.ZRXTokenContract.deployFrom0xArtifactAsync(
-        artifacts.ZRXToken,
+    const zrxToken = await wrappers.DummyERC20TokenContract.deployFrom0xArtifactAsync(
+        artifacts.DummyERC20Token,
         provider,
         txDefaults,
         artifacts,
+        '0x Protocol Token',
+        'ZRX',
+        new BigNumber(18),
+        new BigNumber(1000000000000000000000000000),
     );
 
     // Ether token
@@ -174,25 +177,6 @@ export async function runMigrationsAsync(
         encodeERC20AssetData(etherToken.address),
     );
 
-    // OrderValidator
-    const orderValidator = await wrappers.OrderValidatorContract.deployFrom0xArtifactAsync(
-        artifacts.OrderValidator,
-        provider,
-        txDefaults,
-        artifacts,
-        exchange.address,
-        zrxAssetData,
-    );
-
-    // DutchAuction
-    const dutchAuction = await wrappers.DutchAuctionContract.deployFrom0xArtifactAsync(
-        artifacts.DutchAuction,
-        provider,
-        txDefaults,
-        artifacts,
-        exchange.address,
-    );
-
     // TODO (xianny): figure out how to deploy AssetProxyOwnerContract properly
     // // Multisigs
     // const accounts: string[] = await web3Wrapper.getAvailableAddressesAsync();
@@ -231,15 +215,10 @@ export async function runMigrationsAsync(
 
     // Fake the above transactions so our nonce increases and we result with the same addresses
     // while AssetProxyOwner is disabled (TODO: @dekz remove)
-    const dummyTransactionCount = 5;
+    const dummyTransactionCount = 8;
     for (let index = 0; index < dummyTransactionCount; index++) {
         await web3Wrapper.sendTransactionAsync({ to: txDefaults.from, from: txDefaults.from, value: new BigNumber(0) });
     }
-
-    // Fund the Forwarder with ZRX
-    const zrxDecimals = await zrxToken.decimals.callAsync();
-    const zrxForwarderAmount = Web3Wrapper.toBaseUnitAmount(new BigNumber(5000), zrxDecimals);
-    await zrxToken.transfer.awaitTransactionSuccessAsync(forwarder.address, zrxForwarderAmount, txDefaults);
 
     // CoordinatorRegistry
     const coordinatorRegistry = await wrappers.CoordinatorRegistryContract.deployFrom0xArtifactAsync(
@@ -275,6 +254,59 @@ export async function runMigrationsAsync(
         artifacts,
     );
 
+    const erc20BridgeProxy = await wrappers.ERC20BridgeProxyContract.deployFrom0xArtifactAsync(
+        artifacts.ERC20BridgeProxy,
+        provider,
+        txDefaults,
+        {},
+    );
+    await exchange.registerAssetProxy.awaitTransactionSuccessAsync(erc20BridgeProxy.address, txDefaults);
+    await erc20BridgeProxy.addAuthorizedAddress.awaitTransactionSuccessAsync(exchange.address);
+    await erc20BridgeProxy.addAuthorizedAddress.awaitTransactionSuccessAsync(multiAssetProxy.address);
+    await multiAssetProxy.registerAssetProxy.awaitTransactionSuccessAsync(erc20BridgeProxy.address);
+
+    const zrxProxy = erc20Proxy.address;
+    const zrxVault = await wrappers.ZrxVaultContract.deployFrom0xArtifactAsync(
+        artifacts.ZrxVault,
+        provider,
+        txDefaults,
+        {},
+        zrxProxy,
+        zrxToken.address,
+    );
+    await erc20Proxy.addAuthorizedAddress.awaitTransactionSuccessAsync(zrxVault.address);
+
+    // Note we use TestStakingContract as the deployed bytecode of a StakingContract
+    // has the tokens hardcoded
+    const stakingLogic = await wrappers.TestStakingContract.deployFrom0xArtifactAsync(
+        artifacts.Staking,
+        provider,
+        txDefaults,
+        {},
+        etherToken.address,
+        zrxVault.address,
+    );
+
+    const stakingProxy = await wrappers.StakingProxyContract.deployFrom0xArtifactAsync(
+        artifacts.StakingProxy,
+        provider,
+        txDefaults,
+        {},
+        stakingLogic.address,
+    );
+
+    // Reference the Proxy as the StakingContract for setup
+    const stakingDel = await new wrappers.StakingContract(stakingProxy.address, provider, txDefaults);
+    await stakingProxy.addAuthorizedAddress.awaitTransactionSuccessAsync(txDefaults.from);
+    await stakingDel.addExchangeAddress.awaitTransactionSuccessAsync(exchange.address);
+    await exchange.setProtocolFeeCollectorAddress.awaitTransactionSuccessAsync(stakingProxy.address);
+    await exchange.setProtocolFeeMultiplier.awaitTransactionSuccessAsync(new BigNumber(150000));
+
+    await zrxVault.addAuthorizedAddress.awaitTransactionSuccessAsync(txDefaults.from);
+    await zrxVault.setStakingProxy.awaitTransactionSuccessAsync(stakingProxy.address);
+    await stakingLogic.addAuthorizedAddress.awaitTransactionSuccessAsync(txDefaults.from);
+    await stakingLogic.addExchangeAddress.awaitTransactionSuccessAsync(exchange.address);
+
     const contractAddresses = {
         erc20Proxy: erc20Proxy.address,
         erc721Proxy: erc721Proxy.address,
@@ -284,21 +316,20 @@ export async function runMigrationsAsync(
         exchange: exchange.address,
         // TODO (xianny): figure out how to deploy AssetProxyOwnerContract
         assetProxyOwner: constants.NULL_ADDRESS,
-        erc20BridgeProxy: constants.NULL_ADDRESS,
+        erc20BridgeProxy: erc20BridgeProxy.address,
         zeroExGovernor: constants.NULL_ADDRESS,
         forwarder: forwarder.address,
-        orderValidator: orderValidator.address,
-        dutchAuction: dutchAuction.address,
+        orderValidator: constants.NULL_ADDRESS,
+        dutchAuction: constants.NULL_ADDRESS,
         coordinatorRegistry: coordinatorRegistry.address,
         coordinator: coordinator.address,
         multiAssetProxy: multiAssetProxy.address,
         staticCallProxy: staticCallProxy.address,
         devUtils: devUtils.address,
         exchangeV2: constants.NULL_ADDRESS,
-        zrxVault: constants.NULL_ADDRESS,
-        readOnlyProxy: constants.NULL_ADDRESS,
-        staking: constants.NULL_ADDRESS,
-        stakingProxy: constants.NULL_ADDRESS,
+        zrxVault: zrxVault.address,
+        staking: stakingLogic.address,
+        stakingProxy: stakingProxy.address,
     };
 
     return contractAddresses;
