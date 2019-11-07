@@ -23,7 +23,7 @@ import {
     TestStakingContract,
     ZrxVaultContract,
 } from '@0x/contracts-staking';
-import { BlockchainTestsEnvironment, constants } from '@0x/contracts-test-utils';
+import { BlockchainTestsEnvironment, constants, TransactionHelper } from '@0x/contracts-test-utils';
 import { BigNumber } from '@0x/utils';
 import { TxData } from 'ethereum-types';
 import * as _ from 'lodash';
@@ -195,7 +195,28 @@ export class DeploymentManager {
             staking.stakingProxy,
         ]);
 
-        return new DeploymentManager(assetProxies, governor, exchange, staking, tokens, chainId, accounts, txDefaults);
+        // Create a `TransactionHelper` object that uses all of the packages artifacts.
+        const txHelper = new TransactionHelper(environment.web3Wrapper, {
+            ...assetProxyArtifacts,
+            ...ERC20Artifacts,
+            ...ERC721Artifacts,
+            ...ERC1155Artifacts,
+            ...exchangeArtifacts,
+            ...stakingArtifacts,
+        });
+
+        // Construct the new instance and return it.
+        return new DeploymentManager(
+            assetProxies,
+            governor,
+            exchange,
+            staking,
+            tokens,
+            chainId,
+            accounts,
+            txDefaults,
+            txHelper,
+        );
     }
 
     /**
@@ -484,6 +505,7 @@ export class DeploymentManager {
         public chainId: number,
         public accounts: string[],
         public txDefaults: Partial<TxData>,
+        public txHelper: TransactionHelper,
     ) {}
 }
 // tslint:disable:max-file-line-count

@@ -6,7 +6,6 @@ import { blockchainTests, constants, expect } from '@0x/contracts-test-utils';
 import { assetDataUtils, ExchangeRevertErrors, orderHashUtils } from '@0x/order-utils';
 import { OrderStatus, SignedOrder } from '@0x/types';
 import { BigNumber } from '@0x/utils';
-import * as _ from 'lodash';
 
 import { Actor } from '../actors/base';
 import { Maker } from '../actors/maker';
@@ -14,8 +13,6 @@ import { DeploymentManager } from '../utils/deployment_manager';
 import { MatchOrderTester } from '../utils/match_order_tester';
 
 const { isRoundingErrorCeil, isRoundingErrorFloor } = LibReferenceFunctions;
-
-const ZERO = constants.ZERO_AMOUNT;
 
 blockchainTests.resets('matchOrders', env => {
     // The fee recipient addresses.
@@ -2615,8 +2612,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(2),
@@ -2657,8 +2654,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(2),
@@ -2718,8 +2715,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(4),
@@ -2777,8 +2774,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(4),
@@ -2823,8 +2820,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(2),
@@ -2899,8 +2896,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(6),
@@ -2945,8 +2942,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(2),
@@ -3000,8 +2997,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(2),
@@ -3046,8 +3043,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(2),
@@ -3125,8 +3122,8 @@ blockchainTests.resets('matchOrders', env => {
                 {
                     leftOrders,
                     rightOrders,
-                    leftOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
-                    rightOrdersTakerAssetFilledAmounts: [ZERO, ZERO],
+                    leftOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
+                    rightOrdersTakerAssetFilledAmounts: [constants.ZERO_AMOUNT, constants.ZERO_AMOUNT],
                 },
                 matcher.address,
                 PROTOCOL_FEE.times(6),
