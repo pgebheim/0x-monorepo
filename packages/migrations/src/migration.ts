@@ -88,7 +88,6 @@ export async function runMigrationsAsync(
     );
 
     // Exchange
-    const zrxAssetData = encodeERC20AssetData(zrxToken.address);
     const exchange = await wrappers.ExchangeContract.deployFrom0xArtifactAsync(
         artifacts.Exchange,
         provider,
