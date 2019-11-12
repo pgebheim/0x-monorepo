@@ -28,6 +28,7 @@ export { ExchangeSwapQuoteConsumer } from './quote_consumers/exchange_swap_quote
 export { SwapQuoteConsumer } from './quote_consumers/swap_quote_consumer';
 export { SwapQuoter } from './swap_quoter';
 export { protocolFeeUtils } from './utils/protocol_fee_utils';
+export { affiliateFeeUtils } from './utils/affiliate_fee_utils';
 export { InsufficientAssetLiquidityError } from './errors';
 
 export {
