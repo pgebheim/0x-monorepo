@@ -57,4 +57,4 @@ export {
     ValidatorSignature,
 } from '@0x/types';
 
-export { TypedDataError, TradeSide, TransferType } from './types';
+export { TypedDataError } from './types';

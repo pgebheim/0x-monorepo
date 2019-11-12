@@ -33,11 +33,11 @@ export class ForwarderSwapQuoteConsumer implements SwapQuoteConsumerBase<Forward
         contractWrappers: ContractWrappers,
         options: Partial<SwapQuoteConsumerOpts> = {},
     ) {
-        const { networkId } = _.merge({}, constants.DEFAULT_SWAP_QUOTER_OPTS, options);
-        assert.isNumber('networkId', networkId);
+        const { chainId } = _.merge({}, constants.DEFAULT_SWAP_QUOTER_OPTS, options);
+        assert.isNumber('chainId', chainId);
         const provider = providerUtils.standardizeOrThrow(supportedProvider);
         this.provider = provider;
-        this.chainId = networkId;
+        this.chainId = chainId;
         this._contractWrappers = contractWrappers;
     }
 

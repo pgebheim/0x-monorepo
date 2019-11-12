@@ -20,7 +20,7 @@ const expect = chai.expect;
 const blockchainLifecycle = new BlockchainLifecycle(web3Wrapper);
 
 const ONE_ETH_IN_WEI = new BigNumber(1000000000000000000);
-const TESTRPC_NETWORK_ID = 50;
+const TESTRPC_CHAIN_ID = 1337;
 const UNLIMITED_ALLOWANCE_IN_BASE_UNITS = new BigNumber(2).pow(256).minus(1); // tslint:disable-line:custom-no-magic-numbers
 
 // tslint:disable: no-unused-expression
@@ -52,7 +52,8 @@ describe('OrderPruner', () => {
     let partiallyFilledOpenSignedOrderFeeInMakerAsset: SignedOrder;
     let filledOpenSignedOrder: SignedOrder;
 
-    const networkId = TESTRPC_NETWORK_ID;
+    const chainId = TESTRPC_CHAIN_ID;
+;
     const fillableAmount = new BigNumber(10).multipliedBy(ONE_ETH_IN_WEI);
     const partialFillAmount = new BigNumber(2).multipliedBy(ONE_ETH_IN_WEI);
     const takerFeeAmount = new BigNumber(2).multipliedBy(ONE_ETH_IN_WEI);
@@ -62,7 +63,7 @@ describe('OrderPruner', () => {
         await blockchainLifecycle.startAsync();
         userAddresses = await web3Wrapper.getAvailableAddressesAsync();
         const config = {
-            networkId,
+            chainId,
             contractAddresses,
         };
         contractWrappers = new ContractWrappers(provider, config);
@@ -88,7 +89,7 @@ describe('OrderPruner', () => {
             takerFee: constants.ZERO_AMOUNT,
             feeRecipientAddress: feeRecipient,
             exchangeAddress: contractAddresses.exchange,
-            chainId: networkId,
+            chainId,
         };
         const privateKey = devConstants.TESTRPC_PRIVATE_KEYS[userAddresses.indexOf(makerAddress)];
         orderFactory = new OrderFactory(privateKey, defaultOrderParams);
