@@ -50,7 +50,7 @@ export class ForwarderSwapQuoteConsumer implements SwapQuoteConsumerBase<Forward
         quote: SwapQuote,
         opts: Partial<SwapQuoteGetOutputOpts & ForwarderExtensionContractOpts> = {},
     ): Promise<CalldataInfo> {
-        assert.isValidForwarderSwapQuote('quote', quote, await this._getEtherTokenAssetDataOrThrowAsync());
+        assert.isValidForwarderSwapQuote('quote', quote, await this.getEtherTokenAssetDataOrThrowAsync());
 
         const { toAddress, methodAbi, ethAmount, params } = await this.getSmartContractParamsOrThrowAsync(quote, opts);
 
@@ -82,7 +82,7 @@ export class ForwarderSwapQuoteConsumer implements SwapQuoteConsumerBase<Forward
         quote: SwapQuote,
         opts: Partial<SwapQuoteGetOutputOpts & ForwarderExtensionContractOpts> = {},
     ): Promise<SmartContractParamsInfo<ForwarderSmartContractParams>> {
-        assert.isValidForwarderSwapQuote('quote', quote, await this._getEtherTokenAssetDataOrThrowAsync());
+        assert.isValidForwarderSwapQuote('quote', quote, await this.getEtherTokenAssetDataOrThrowAsync());
 
         const { ethAmount: providedEthAmount, feeRecipient, feePercentage } = _.merge(
             {},
@@ -156,7 +156,7 @@ export class ForwarderSwapQuoteConsumer implements SwapQuoteConsumerBase<Forward
         quote: SwapQuote,
         opts: Partial<SwapQuoteExecutionOpts & ForwarderExtensionContractOpts>,
     ): Promise<string> {
-        assert.isValidForwarderSwapQuote('quote', quote, await this._getEtherTokenAssetDataOrThrowAsync());
+        assert.isValidForwarderSwapQuote('quote', quote, await this.getEtherTokenAssetDataOrThrowAsync());
 
         const { ethAmount: providedEthAmount, takerAddress, gasLimit, gasPrice, feeRecipient, feePercentage } = _.merge(
             {},
@@ -232,7 +232,7 @@ export class ForwarderSwapQuoteConsumer implements SwapQuoteConsumerBase<Forward
         }
     }
 
-    private async _getEtherTokenAssetDataOrThrowAsync(): Promise<string> {
+    public async getEtherTokenAssetDataOrThrowAsync(): Promise<string> {
         return this._contractWrappers.devUtils.encodeERC20AssetData.callAsync(
             this._contractWrappers.contractAddresses.etherToken,
         );
