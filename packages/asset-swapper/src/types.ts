@@ -2,11 +2,18 @@ import { SignedOrder } from '@0x/types';
 import { BigNumber } from '@0x/utils';
 import { MethodAbi } from 'ethereum-types';
 
+/**
+ * expiryBufferMs: The number of seconds to add when calculating whether an order is expired or not. Defaults to 300s (5m).
+ * permittedOrderFeeTypes: A set of all the takerFee types that OrderPruner will filter for
+ */
 export interface OrderPrunerOpts {
     expiryBufferMs: number;
     permittedOrderFeeTypes: Set<OrderPrunerPermittedFeeTypes>;
 }
 
+/**
+ * Represents the on-chain metadata of a signed order
+ */
 export interface OrderPrunerOnChainMetadata {
     orderStatus: number;
     orderHash: string;
@@ -14,6 +21,7 @@ export interface OrderPrunerOnChainMetadata {
     fillableTakerAssetAmount: BigNumber;
     isValidSignature: boolean;
 }
+
 /**
  * makerAssetData: The assetData representing the desired makerAsset.
  * takerAssetData: The assetData representing the desired takerAsset.
@@ -26,6 +34,9 @@ export interface OrderProviderRequest {
 }
 
 /**
+ * fillableMakerAssetAmount: Amount of makerAsset that is fillable
+ * fillableTakerAssetAmount: Amount of takerAsset that is fillable
+ * fillableTakerFeeAmount: Amount of takerFee paid to fill fillableTakerAssetAmount
  */
 export interface PrunedSignedOrder extends SignedOrder {
     fillableMakerAssetAmount: BigNumber;
@@ -164,6 +175,7 @@ export interface SwapQuoteGetOutputOpts {}
  * takerAddress: The address to perform the buy. Defaults to the first available address from the provider.
  * gasLimit: The amount of gas to send with a transaction (in Gwei). Defaults to an eth_estimateGas rpc call.
  * gasPrice: Gas price in Wei to use for a transaction
+ * ethAmount: The amount of eth sent with the execution of a swap
  */
 export interface SwapQuoteExecutionOpts extends SwapQuoteGetOutputOpts {
     takerAddress?: string;
