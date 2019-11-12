@@ -1,6 +1,6 @@
 import { ContractWrappers } from '@0x/contract-wrappers';
 import { schemas } from '@0x/json-schemas';
-import { assetDataUtils, SignedOrder } from '@0x/order-utils';
+import { SignedOrder } from '@0x/order-utils';
 import { MeshOrderProviderOpts, Orderbook, SRAPollingOrderProviderOpts } from '@0x/orderbook';
 import { BigNumber, providerUtils } from '@0x/utils';
 import { SupportedProvider, ZeroExProvider } from 'ethereum-types';
@@ -284,9 +284,8 @@ export class SwapQuoter {
     ): Promise<LiquidityForTakerMakerAssetDataPair> {
         assert.isString('makerAssetData', makerAssetData);
         assert.isString('takerAssetData', takerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(makerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(takerAssetData);
-
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(takerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(makerAssetData);
         const assetPairs = await this.getAvailableMakerAssetDatasAsync(takerAssetData);
         if (!assetPairs.includes(makerAssetData)) {
             return {
@@ -306,7 +305,7 @@ export class SwapQuoter {
      */
     public async getAvailableTakerAssetDatasAsync(makerAssetData: string): Promise<string[]> {
         assert.isString('makerAssetData', makerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(makerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(makerAssetData);
         const allAssetPairs = await this.orderbook.getAvailableAssetDatasAsync();
         const assetPairs = allAssetPairs
             .filter(pair => pair.assetDataA.assetData === makerAssetData)
@@ -321,7 +320,7 @@ export class SwapQuoter {
      */
     public async getAvailableMakerAssetDatasAsync(takerAssetData: string): Promise<string[]> {
         assert.isString('takerAssetData', takerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(takerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(takerAssetData);
         const allAssetPairs = await this.orderbook.getAvailableAssetDatasAsync();
         const assetPairs = allAssetPairs
             .filter(pair => pair.assetDataB.assetData === takerAssetData)
@@ -340,8 +339,8 @@ export class SwapQuoter {
     ): Promise<boolean> {
         assert.isString('makerAssetData', makerAssetData);
         assert.isString('takerAssetData', takerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(makerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(takerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(makerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(takerAssetData);
         const availableMakerAssetDatas = await this.getAvailableMakerAssetDatasAsync(takerAssetData);
         return _.includes(availableMakerAssetDatas, makerAssetData);
     }
@@ -357,8 +356,8 @@ export class SwapQuoter {
     ): Promise<PrunedSignedOrder[]> {
         assert.isString('makerAssetData', makerAssetData);
         assert.isString('takerAssetData', takerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(makerAssetData);
-        assetDataUtils.decodeAssetDataOrThrow(takerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(takerAssetData);
+        await this._contractWrappers.devUtils.revertIfInvalidAssetData.callAsync(makerAssetData);
         // get orders
         const apiOrders = await this.orderbook.getOrdersAsync(makerAssetData, takerAssetData);
         const orders = _.map(apiOrders, o => o.order);
